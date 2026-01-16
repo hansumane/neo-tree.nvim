@@ -192,6 +192,8 @@ end
 ---@param callback function? Callback to call after the items are loaded.
 M.navigate = function(state, path, path_to_reveal, callback, async)
   state._ready = false
+  path = utils.remove_path_prefix(path)
+  path_to_reveal = utils.remove_path_prefix(path_to_reveal)
   log.trace("navigate", path, path_to_reveal, async)
   utils.debounce("filesystem_navigate", function()
     M._navigate_internal(state, path, path_to_reveal, callback, async)

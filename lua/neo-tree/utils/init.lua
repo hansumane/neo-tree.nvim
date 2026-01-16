@@ -1620,4 +1620,28 @@ end
 ---@type table<integer, integer[]>
 M.prior_windows = {}
 
+-- Remove special prefixes so that they won't break other path functions
+---@param path? string
+---@return string? path
+M.remove_path_prefix = function(path)
+  if not path then
+    return path
+  end
+
+  local prefixes = {
+    "oil://",
+    "suda://",
+  }
+
+  for _, prefix in ipairs(prefixes) do
+    if path:sub(1, #prefix) == prefix then
+      return path:sub(#prefix + 1)
+    elseif path:sub(1, #prefix - 2) == prefix:sub(1, #prefix - 2) then
+      return path:sub(#prefix - 1)
+    end
+  end
+
+  return path
+end
+
 return M
